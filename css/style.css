@@ -18,6 +18,10 @@ h2 {
   margin-bottom: 10px;
 }
 
+.slider-values {
+  color: black;
+}
+
 .center-wrapper {
     padding: 0 50px 0 50px;
     margin: auto;
@@ -58,30 +62,31 @@ h2 {
     -webkit-border-radius:28px;
     border-radius:28px;
     border: 1px solid rgba(255,255,255,0.3);
-    padding: 16px 31px;
     display: table-cell;
     vertical-align: middle;
 }
 
 .horizontal input[type="range"] {
-    width: 500px;
+    width: 530px;
 }
 
 .horizontal {
   display:block;
   margin-top: 20px;
+  padding: 16px 31px;
 }
 
 .vertical input[type="range"]
 {
     writing-mode: bt-lr; /* IE */
     -webkit-appearance: slider-vertical; /* WebKit */
-    width: 8px;
+    width: 23px;
     height: 300px;
 }
 
 .vertical {
   text-align: center;
+  padding: 31px 16px;
 }
 
 .horizontal label
