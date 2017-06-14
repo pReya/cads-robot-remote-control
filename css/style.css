@@ -1,0 +1,163 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background-color: rgba(44, 62, 80, 1.0);
+    color: white;
+    font: caption;
+    font-size: 100%;
+    overflow: hidden
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.center-wrapper {
+    padding: 0 50px 0 50px;
+    margin: auto;
+    max-width: 800px;
+}
+
+.content-box {
+    font-size: 1.1rem;
+    font-weight: 400;
+    max-width: 800px;
+    padding: 10px 30px;
+    background-color: rgba(44, 62, 80, 1.0);
+}
+
+.myButton {
+    background-color:transparent;
+    -moz-border-radius:28px;
+    -webkit-border-radius:28px;
+    border-radius:28px;
+    border: 1px solid rgba(255,255,255,0.3);
+    display:inline-block;
+    cursor:pointer;
+    padding:16px 31px;
+    margin: 0 15px 15px 0;
+    text-decoration:none;
+}
+.myButton:hover {
+    border-color: rgba(255,255,255,0.8);
+}
+
+.myButton.activated {
+    border: 2px solid rgba(255,255,255,0.8);
+}
+
+.slider {
+    background-color:transparent;
+    -moz-border-radius:28px;
+    -webkit-border-radius:28px;
+    border-radius:28px;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 16px 31px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.horizontal input[type="range"] {
+    width: 500px;
+}
+
+.horizontal {
+  display:block;
+  margin-top: 20px;
+}
+
+.vertical input[type="range"]
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 8px;
+    height: 300px;
+}
+
+.vertical {
+  text-align: center;
+}
+
+.horizontal label
+{
+  vertical-align:middle;
+}
+
+.vertical label
+{
+  display:block;
+}
+
+.slider input
+{
+    vertical-align:middle;
+}
+
+.button-wrapper
+{
+  margin-top:20px;
+}
+
+
+
+/* GRID */
+.Grid {
+  display: flex;
+}
+
+.Grid-cell {
+  flex: 1;
+}
+
+
+.Grid--fit > .Grid-cell {
+  flex: 1;
+}
+.Grid--full > .Grid-cell {
+  flex: 0 0 100%;
+}
+.Grid--1of2 > .Grid-cell {
+  flex: 0 0 50%
+}
+.Grid--1of3 > .Grid-cell {
+  flex: 0 0 33.3333%
+}
+.Grid--1of4 > .Grid-cell {
+  flex: 0 0 25%
+}
+
+.u-full {
+  width: 100% !important;
+  flex: none !important;
+}
+
+.u-1of2 {
+  width: 50% !important;
+  flex: none !important;
+}
+
+.u-1of3 {
+  width: 33.3333% !important;
+  flex: none !important;
+}
+
+.u-2of3 {
+  width: 66.6667% !important;
+  flex: none !important;
+}
+
+.u-1of4 {
+  width: 25% !important;
+  flex: none !important;
+}
+
+.u-3of4 {
+  width: 75% !important;
+  flex: none !important;
+}

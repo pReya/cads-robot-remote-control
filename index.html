@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://use.fontawesome.com/01b8531a7f.js"></script>
+  <title>CaDS Robot Remote Control</title>
+</head>
+<body>
+  <div class="center-wrapper">
+    <div class="content-box dark-blue-box">
+
+      <h2>CaDS Robot Remote Control</h2>
+
+
+      <div class="Grid">
+
+        <div class="Grid-cell u-1of4">
+          <div class="slider vertical">
+            <label for="vertical-slider">
+              <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+            </label>
+            <input type="range" id="vertical-slider" min="0" max="100" value="30"/>
+            <label for="vertical-slider">
+              <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+            </label>
+          </div>
+        </div>
+
+        <div class="Grid-cell" style="background-color: white;">
+        
+        </div>
+
+      </div>
+      
+
+      <div class="slider horizontal">
+        <label for="horizontal-slider">
+          <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+        </label>
+        <input type="range" id="horizontal-slider" min="0" max="100" value="30"/>
+        <label for="volume-slider">
+          <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+        </label>
+      </div>
+
+      <div class="button-wrapper">
+        <a nohref class="myButton" onclick="toggleBox('brown-box')"><i class="fa fa-power-off" aria-hidden="true"></i> Toggle Box 1</a>
+        <a nohref class="myButton" onclick="toggleBox('orange-box')">Toggle Box 2</a>
+        <a nohref class="myButton" onclick="toggleBox('light-blue-box')">Toggle Box 3</a>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+  </html>
