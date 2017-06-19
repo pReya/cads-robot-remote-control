@@ -10,8 +10,17 @@
   <div class="center-wrapper">
     <div class="content-box dark-blue-box">
 
-      <h2>CaDS Robot Remote Control</h2>
-
+      <div class="Grid">
+        <div class="Grid-cell">
+          <form class="borderBox">
+            <label for="robotSelector">Robot: </label>
+            <select id="robotSelector" name="robot">
+              <option>Loading...</option>
+            </select>
+            <i class="fa fa-refresh" aria-hidden="true" id="refreshButton"></i>
+          </form>
+        </div>
+      </div>
 
       <div class="Grid">
 
@@ -48,16 +57,15 @@
       </div>
 
       <div class="button-wrapper">
-        <a nohref class="myButton" onclick="toggleBox('brown-box')"><i class="fa fa-hand-rock-o" aria-hidden="true"></i> Grab</a>
+        <a nohref class="myButton" id="grip-button"><i class="fa fa-hand-rock-o" aria-hidden="true"></i> Grab</a>
         <a nohref class="myButton" onclick="toggleBox('orange-box')">Toggle Box 2</a>
         <a nohref class="myButton" onclick="toggleBox('light-blue-box')">Toggle Box 3</a>
       </div>
     </div>
   </div>
 </body>
-
-<script>
+  <script>
     // You can also require other files to run in this process
     require('./renderer.js')
   </script>
-  </html>
+</html>

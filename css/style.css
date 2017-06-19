@@ -36,6 +36,28 @@ h2 {
     background-color: rgba(44, 62, 80, 1.0);
 }
 
+.borderBox
+{
+  background-color:transparent;
+  -moz-border-radius:28px;
+  -webkit-border-radius:28px;
+  border-radius:28px;
+  border: 1px solid rgba(255,255,255,0.3);
+  display:inline-block;
+  padding:16px 31px;
+  margin: 0 15px 15px 0;
+  text-decoration:none;
+
+}
+
+#refreshButton
+{
+  cursor:pointer;
+}
+
+::selection {
+  background:transparent;
+}
 .myButton {
     background-color:transparent;
     -moz-border-radius:28px;
@@ -109,11 +131,17 @@ h2 {
   margin-top:20px;
 }
 
+#robotSelector
+{
+  min-width: 300px;
+}
+
 
 
 /* GRID */
 .Grid {
   display: flex;
+  margin: 20px 0px;
 }
 
 .Grid-cell {
