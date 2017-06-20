@@ -2,7 +2,7 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 const net = require('net');
-const guiServerIp = "141.22.67.84";
+const guiServerIp = "127.0.0.1";
 const guiServerPort = "8000";
 
 var horizontalSlider = document.getElementById("horizontal-slider");
@@ -51,17 +51,17 @@ function getServices()
         console.log("Received answer: " + data.toString());
 
         // Save response array of robot names
-        robotNames = JSON.parse(data.toString());
+        robotServices = JSON.parse(data.toString());
 
         // Refresh list in frontend
         var robotSelect = document.getElementById("robotSelector");
         robotSelect.innerHTML = "";
 
-        for (var i = 0; i < robotNames.length; i++)
+        for (var i = 0; i < robotServices.length; i++)
         {
             var newOption = document.createElement("option");
-            newOption.text = robotNames[i];
-            newOption.value = robotNames[i];
+            newOption.text = robotServices[i].name;
+            newOption.value = robotServices[i].name;
             robotSelect.add(newOption);
         }
 
