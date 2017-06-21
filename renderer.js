@@ -57,11 +57,11 @@ function getServices()
         var robotSelect = document.getElementById("robotSelector");
         robotSelect.innerHTML = "";
 
-        for (var i = 0; i < robotServices.length; i++)
+        for (robotName in robotServices)
         {
             var newOption = document.createElement("option");
-            newOption.text = robotServices[i].name;
-            newOption.value = robotServices[i].name;
+            newOption.text = robotName;
+            newOption.value = robotName;
             robotSelect.add(newOption);
         }
 
