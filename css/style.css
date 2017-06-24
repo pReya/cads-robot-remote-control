@@ -21,13 +21,20 @@ h2 {
   margin-bottom: 10px;
 }
 
+h3
+{
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
 .slider-values {
   color: white;
 }
 
 .center-wrapper {
     margin: auto;
-    width: 700px;
+    width: 500px;
+    padding-top: 15px;
 }
 
 .borderBox
@@ -39,11 +46,12 @@ h2 {
   border: 1px solid rgba(255,255,255,0.3);
   display:inline-block;
   padding:16px 31px;
-  margin: 0 15px 15px 0;
+  margin: 0 0 15px 0;
   text-decoration:none;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
+  text-align: center;
 }
 
 #refreshButton
@@ -54,6 +62,7 @@ h2 {
 
 .button {
   width: 100%;
+  cursor:pointer;
 }
 
 .button:hover {
@@ -70,7 +79,7 @@ h2 {
 }
 
 .horizontal input[type="range"] {
-    width: 93%;
+    width: 90%;
 }
 
 .horizontal {
@@ -102,6 +111,13 @@ h2 {
   display:block;
 }
 
+.text-label
+{
+  font-size: 11px;
+
+  color: rgba(255, 255, 255, 0.4);
+}
+
 .slider input
 {
     vertical-align:middle;
@@ -110,12 +126,13 @@ h2 {
 .button-wrapper
 {
   margin-top:20px;
+  text-align: center;
 }
 
 #robotSelector
 {
   vertical-align: middle;
-  min-width: 300px;
+  min-width: 350px;
 }
 
 
@@ -123,7 +140,6 @@ h2 {
 /* GRID */
 .Grid {
   display: flex;
-  margin: 20px 0px;
 }
 
 .Grid-cell {
