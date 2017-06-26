@@ -1,24 +1,24 @@
-* {
+*
+{
     padding: 0;
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-app-region: drag;
 }
 
-::selection {
+::selection
+{
   background:transparent;
 }
 
-body {
+body
+{
     background-color: rgba(1, 30, 56, 1.0);
     color: white;
     font: caption;
     font-size: 1.1rem;
     overflow: hidden
-}
-
-h2 {
-  margin-bottom: 10px;
 }
 
 h3
@@ -27,73 +27,84 @@ h3
   margin-bottom: 0;
 }
 
-.slider-values {
-  color: white;
+.center-wrapper
+{
+  margin: auto;
+  width: 500px;
+  padding-top: 25px;
 }
 
-.center-wrapper {
-    margin: auto;
-    width: 500px;
-    padding-top: 15px;
-}
-
-.borderBox
+.border-box
 {
   background-color:transparent;
   -moz-border-radius:28px;
   -webkit-border-radius:28px;
   border-radius:28px;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 2px solid rgba(255,255,255,0.5);
   display:inline-block;
   padding:16px 31px;
-  margin: 0 0 15px 0;
+  margin-bottom: 15px;
   text-decoration:none;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
   text-align: center;
+  -webkit-app-region: no-drag;
 }
 
-#refreshButton
+.border-box:hover
 {
+  border-color: rgba(255,255,255,0.8);
+}
+
+#refresh-button
+{
+  margin-left: 5px;
   vertical-align: middle;
   cursor:pointer;
 }
 
-.button {
-  width: 100%;
+#settings-button
+{
+  margin-left: 5px;
+  vertical-align: middle;
   cursor:pointer;
 }
 
-.button:hover {
-    border-color: rgba(255,255,255,0.8);
+.full-width
+{
+  width: 100%;
 }
 
-.button.activated {
-    border: 3px solid rgba(255,255,255,0.8);
+.button
+{
+  cursor:pointer;
 }
 
-.slider {
-    display: table-cell;
-    vertical-align: middle;
+.slider
+{
+  display: table-cell;
+  vertical-align: middle;
 }
 
-.horizontal input[type="range"] {
-    width: 90%;
+.horizontal input[type="range"]
+{
+  width: 90%;
 }
 
-.horizontal {
+.horizontal
+{
   display:block;
   margin-top: 20px;
-  padding: 16px 31px;
+  padding: 0 31px 10px 31px;
 }
 
 .vertical input[type="range"]
 {
-    writing-mode: bt-lr; /* IE */
-    -webkit-appearance: slider-vertical; /* WebKit */
-    width: 23px;
-    height: 300px;
+  writing-mode: bt-lr; /* IE */
+  -webkit-appearance: slider-vertical; /* WebKit */
+  width: 23px;
+  height: 300px;
 }
 
 .vertical {
@@ -113,28 +124,35 @@ h3
 
 .text-label
 {
-  font-size: 11px;
-
-  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .slider input
 {
-    vertical-align:middle;
+  vertical-align:middle;
 }
 
 .button-wrapper
 {
-  margin-top:20px;
   text-align: center;
 }
 
 #robotSelector
 {
   vertical-align: middle;
-  min-width: 350px;
+  min-width: 320px;
 }
 
+.emergency-stop
+{
+  border-color: rgba(255,0,0,0.5);
+}
+
+.emergency-stop:hover
+{
+  border-color: rgba(255,0,0,0.8);
+}
 
 
 /* GRID */
@@ -191,4 +209,43 @@ h3
 .u-3of4 {
   width: 75% !important;
   flex: none !important;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    color: #000000;
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }

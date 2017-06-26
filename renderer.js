@@ -10,10 +10,30 @@ var verticalSlider = document.getElementById("vertical-slider");
 var horizontalValue = document.getElementById("value-horizontal");
 var verticalValue = document.getElementById("value-vertical");
 var gripButton = document.getElementById("grip-button");
-var refreshButton = document.getElementById("refreshButton");
+var refreshButton = document.getElementById("refresh-button");
+
+
+var modal = document.getElementById('settings-modal');
+var btn = document.getElementById("settings-button");
+var span = document.getElementsByClassName("close")[0];
+ 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
 
 var gripStatus = false;
 var robotNames;
+
 
 function sendMessage(serviceName, value)
 {

@@ -1,13 +1,22 @@
 {
   "name": "cads-robot-remote-control",
+  "productName": "CaDS Robot Remote Control",
   "version": "1.0.0",
   "description": "Electron GUI for CaDS robot remote control. ",
   "main": "main.js",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/pReya/cads-robot-remote-control",
   "scripts": {
     "start": "electron ."
   },
   "author": "Alexander Buhk, Moritz Stueckler",
   "devDependencies": {
-    "electron": "~1.6.2"
-  }
+    "electron": "~1.6.2",
+    "electron-packager": "^8.7.1"
+  },
+  "scripts": {
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CaDS --version-string.FileDescription=CaDS --version-string.ProductName=\"CaDS Robot Remote Control\"",
+    "package-linux" : "electron-packager . --overwrite --platform=linux --arch=x64 --icon=icons/png/1024x1024.png --prune=true --out=release-builds"
+ }
 }

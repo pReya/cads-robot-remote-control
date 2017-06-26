@@ -13,7 +13,12 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({titleBarStyle: 'hidden', width: 800, height: 700})
+  mainWindow = new BrowserWindow({
+    titleBarStyle: 'hidden',
+    width: 590,
+    height: 860,
+    icon: path.join(__dirname, 'icons/png/64x64.png'
+  )})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
