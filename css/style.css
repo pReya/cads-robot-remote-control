@@ -139,7 +139,7 @@ h3
 }
 
 .hidden-wrapper{
-  display: none;
+  display: none !important;
 }
 
 #robot-selector

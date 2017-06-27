@@ -65,7 +65,7 @@ function getServices()
 
     // Send message
     client.write(JSON.stringify(getServicesMsg) + '\r\n');
-    log("Sent message " + getServicesMsg.type + "to Server " + guiServerIp + ":" + guiServerPort);
+    log("Sent message " + getServicesMsg.type + " to Server " + guiServerIp + ":" + guiServerPort);
 
     // Set callback for response
     client.on('data', (data) => {
@@ -101,12 +101,12 @@ function refreshGuiElements()
 
     if ('moveVertical' in servicesForCurrentRobot)
     {
-        document.getElementById('vertical-wrapper').style.display='flex';
+        document.getElementById('vertical-wrapper').classList.remove('hidden-wrapper');
     }
 
     if ('emergencyStop' in servicesForCurrentRobot)
     {
-        document.getElementById('emergency-wrapper').style.display='inline';
+        document.getElementById('emergency-wrapper').classList.remove('hidden-wrapper');
     }
     
 }
@@ -128,8 +128,18 @@ function log(message)
     }
 }
 
+function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+// Usage!
+sleep(2000).then(() => {
+    getServices();
+})
+
 // Start of program
-getServices();
+
+
 
 
 
