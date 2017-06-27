@@ -19,11 +19,11 @@
 
 </div>
   <div class="center-wrapper">
-      <div class="Grid">
+      <div class="Grid" id="selector-wrapper">
         <div class="Grid-cell">
           <form class="border-box full-width">
-            <label for="robotSelector">Robot: </label>
-            <select id="robotSelector" name="robot">
+            <label for="robot-selector">Robot: </label>
+            <select id="robot-selector" name="robot">
               <option>Loading...</option>
             </select>
             <i class="fa fa-refresh" aria-hidden="true" id="refresh-button"></i>
@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <div class="Grid">
+      <div class="Grid" id="vertical-wrapper" class="hidden-wrapper">
         <div class="Grid-cell u-1of4">
           <div class="slider vertical border-box">
             <label for="vertical-slider">
@@ -52,28 +52,37 @@
           </div>
         </div>
       </div>
-      
-
-
-      <div class="slider horizontal border-box full-width">
-        <label for="horizontal-slider" class="text-label">Horizontal position:</label><br />
-        <label for="horizontal-slider">
-          <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
-        </label>
-        <input type="range" id="horizontal-slider" min="0" max="100" value="50"/>
-        <label for="horizontal-slider">
-          <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-        </label>
+      <div class="Grid" id="horizontal-wrapper">
+        <div class="Grid-cell">
+          <div class="slider horizontal border-box full-width">
+            <label for="horizontal-slider" class="text-label">Horizontal position:</label><br />
+            <label for="horizontal-slider">
+              <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+            </label>
+            <input type="range" id="horizontal-slider" min="0" max="100" value="50"/>
+            <label for="horizontal-slider">
+              <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+            </label>
+          </div>
+        </div>
       </div>
 
-      <div class="button-wrapper">
-        <a nohref class="border-box button full-width" id="grip-button"><i class="fa fa-hand-rock-o" aria-hidden="true"></i> Open Grabber</a>
+      <div class="Grid" id="grip-wrapper">
+        <div class="Grid-cell">
+          <div class="button-wrapper">
+            <a nohref class="border-box button full-width" id="grip-button"><i class="fa fa-hand-rock-o" aria-hidden="true"></i> Open Grabber</a>
+          </div>
+        </div>
       </div>
 
       <h3>Custom services:</h3>
 
-      <div class="button-wrapper">
-        <a nohref class="border-box button emergency-stop full-width" id="grip-button"><i class="fa fa-ban" aria-hidden="true"></i> Emergency Stop</a>
+      <div class="Grid" id="emergency-wrapper" class="hidden-wrapper">
+        <div class="Grid-cell">
+          <div class="button-wrapper">
+            <a nohref class="border-box button emergency-stop full-width" id="grip-button"><i class="fa fa-ban" aria-hidden="true"></i> Emergency Stop</a>
+          </div>
+        </div>
       </div>
 
       <div class="button-wrapper">

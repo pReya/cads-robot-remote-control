@@ -4,6 +4,7 @@
 const net = require('net');
 const guiServerIp = "127.0.0.1";
 const guiServerPort = "8000";
+const debugOutput = true;
 
 var horizontalSlider = document.getElementById("horizontal-slider");
 var verticalSlider = document.getElementById("vertical-slider");
@@ -11,8 +12,9 @@ var horizontalValue = document.getElementById("value-horizontal");
 var verticalValue = document.getElementById("value-vertical");
 var gripButton = document.getElementById("grip-button");
 var refreshButton = document.getElementById("refresh-button");
+var robotSelect = document.getElementById("robot-selector");
 
-
+// Modal
 var modal = document.getElementById('settings-modal');
 var btn = document.getElementById("settings-button");
 var span = document.getElementsByClassName("close")[0];
@@ -32,12 +34,11 @@ window.onclick = function(event) {
 }
 
 var gripStatus = false;
-var robotNames;
+var robotRegistry;
 
 
 function sendMessage(serviceName, value)
 {
-    var robotSelect = document.getElementById("robotSelector");
     var msg = {
         "type" : "movement",
         "name" : String(robotSelect.options[robotSelect.selectedIndex].value),
@@ -45,7 +46,7 @@ function sendMessage(serviceName, value)
         "value" : String(value),
     }
     client.write(JSON.stringify(msg) + '\r\n');
-    console.log('Sent message: ' + JSON.stringify(msg));
+    log('Sent message: ' + JSON.stringify(msg));
 }
 
 function toggleGripStatus()
@@ -64,30 +65,50 @@ function getServices()
 
     // Send message
     client.write(JSON.stringify(getServicesMsg) + '\r\n');
-    console.log("Sent message " + getServicesMsg.type + "to Server " + guiServerIp + ":" + guiServerPort);
+    log("Sent message " + getServicesMsg.type + "to Server " + guiServerIp + ":" + guiServerPort);
 
     // Set callback for response
     client.on('data', (data) => {
-        console.log("Received answer: " + data.toString());
-
+        if (JSON.stringify(robotRegistry) === data.toString())
+        {
+            log("Received same RobotRegistry!");
+            return;
+        }
         // Save response array of robot names
-        robotServices = JSON.parse(data.toString());
+        robotRegistry = JSON.parse(data.toString());
 
-        // Refresh list in frontend
-        var robotSelect = document.getElementById("robotSelector");
+        log("Received answer: " + JSON.stringify(robotRegistry));
+
+        // Delete list in frontend and populate again
         robotSelect.innerHTML = "";
 
-        for (robotName in robotServices)
+        for (var robotName in robotRegistry)
         {
             var newOption = document.createElement("option");
             newOption.text = robotName;
             newOption.value = robotName;
             robotSelect.add(newOption);
         }
-
+        refreshGuiElements();
     });
 
+}
 
+function refreshGuiElements()
+{
+    var currentRobot = String(robotSelect.options[robotSelect.selectedIndex].value);
+    var servicesForCurrentRobot = robotRegistry[currentRobot];
+
+    if ('moveVertical' in servicesForCurrentRobot)
+    {
+        document.getElementById('vertical-wrapper').style.display='flex';
+    }
+
+    if ('emergencyStop' in servicesForCurrentRobot)
+    {
+        document.getElementById('emergency-wrapper').style.display='inline';
+    }
+    
 }
 
 function updateDisplayValuesNewRobot(newRobotId)
@@ -96,11 +117,21 @@ function updateDisplayValuesNewRobot(newRobotId)
 }
 
 const client = net.connect({port: guiServerPort, host: guiServerIp}, function() {
-          console.log('Connected to server ' + guiServerIp + ':' + guiServerPort);
+    log('Connected to server ' + guiServerIp + ':' + guiServerPort);
 });
+
+function log(message)
+{
+    if (debugOutput)
+    {
+        console.log(message);
+    }
+}
 
 // Start of program
 getServices();
+
+
 
 
 horizontalSlider.addEventListener("input", function() {
@@ -116,5 +147,6 @@ verticalSlider.addEventListener("input", function() {
 gripButton.addEventListener("click", toggleGripStatus);
 
 refreshButton.addEventListener("click", function() {
+    log("Refresh triggered!");
     getServices();
 }, false);

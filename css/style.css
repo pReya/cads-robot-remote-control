@@ -138,7 +138,11 @@ h3
   text-align: center;
 }
 
-#robotSelector
+.hidden-wrapper{
+  display: none;
+}
+
+#robot-selector
 {
   vertical-align: middle;
   min-width: 320px;

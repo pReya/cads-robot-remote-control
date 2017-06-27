@@ -1,0 +1,24 @@
+{
+  "055179a6-3487-4540-91c0-a17190d6eac1": {
+    "emergencyStop": {
+      "protocol": "udp",
+      "parameter": "binary",
+      "description": "Not-Halt für den Roboter"
+    },
+    "moveHorizontal": {
+      "protocol": "tcp",
+      "parameter": "range",
+      "description": "Horizontale Bewegung des Greifarmes"
+    },
+    "moveVertical": {
+      "protocol": "tcp",
+      "parameter": "range",
+      "description": "Vertikale Bewegung des Greifarmes"
+    },
+    "grab": {
+      "protocol": "tcp",
+      "parameter": "binary",
+      "description": "Greifer am Roboter"
+    }
+  }
+}
