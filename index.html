@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://use.fontawesome.com/01b8531a7f.js"></script>
+  <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
   <title>CaDS Robot Remote Control</title>
 </head>
 <body>
@@ -12,9 +12,11 @@
 
   <div class="modal-content">
     <span class="close">&times;</span>
-    <p>Settings:</p>
-    <label for="ip-input">IP-Adresse: </label><input type="text" name="ip" id ="ip-input" value="127.0.0.1">
-    <label for="ip-input">Port: </label><input type="text" name="port" id ="port-input" value="8888">
+    <h3>Settings:</h3>
+    <label for="ip-input">IP-Adresse: </label><input type="text" name="ip" id ="ip-input" value="127.0.0.1"><br/>
+    <label for="ip-input">Port: </label><input type="text" name="port" id ="port-input" value="8888"><br/>
+    <label><input type="checkbox" id="debug-output" value="true" checked>Show debug output?</label>
+    <button type="button" id="save-settings" onclick="saveSettings()">Save</button>
   </div>
 
 </div>
@@ -57,8 +59,8 @@
 
         <div class="Grid-cell" style="background-image:url('images/cads_logo.png'); background-repeat: no-repeat; background-position: center;">
           <div>
-            <div id="value-horizontal">0</div>
-            <div id="value-vertical">0</div>
+            <div>Horizontal: <span id="value-horizontal">0</span></div>
+            <div>Vertical: <span id="value-vertical">0</span></div>
           </div>
         </div>
       </div>
@@ -88,7 +90,7 @@
       <div class="Grid hidden" id="emergency-wrapper">
         <div class="Grid-cell">
           <div class="button-wrapper">
-            <a nohref class="border-box button emergency-stop full-width" id="grip-button"><i class="fa fa-ban" aria-hidden="true"></i> Emergency Stop</a>
+            <a nohref class="border-box button full-width emergency-stop" id="emergency-button"><i class="fa fa-ban" aria-hidden="true"></i> Emergency Stop</a>
           </div>
         </div>
       </div>
@@ -97,7 +99,6 @@
       <div id="customservices-wrapper">
 
       </div>
-
   </div>
 </body>
   <script>

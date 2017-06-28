@@ -27,6 +27,11 @@ h3
   margin-bottom: 0;
 }
 
+input
+{
+  -webkit-app-region: no-drag;
+}
+
 .center-wrapper
 {
   margin: auto;

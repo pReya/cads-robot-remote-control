@@ -2,9 +2,9 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 const net = require('net');
-const guiServerIp = "127.0.0.1";
-const guiServerPort = "8887";
-const debugOutput = true;
+var guiServerIp = "127.0.0.1";
+var guiServerPort = "8000";
+var debugOutput = true;
 
 var horizontalSlider = document.getElementById("horizontal-slider");
 var verticalSlider = document.getElementById("vertical-slider");
@@ -12,7 +12,9 @@ var horizontalValue = document.getElementById("value-horizontal");
 var verticalValue = document.getElementById("value-vertical");
 var gripButton = document.getElementById("grip-button");
 var refreshButton = document.getElementById("refresh-button");
+var emergencyButton = document.getElementById("emergency-button");
 var robotSelect = document.getElementById("robot-selector");
+var saveSettingsButton = document.getElementById("save-settings");
 
 // Modal
 var modal = document.getElementById('settings-modal');
@@ -36,17 +38,30 @@ window.onclick = function(event) {
 var gripStatus = false;
 var robotRegistry;
 
+function saveSettings()
+{
+    guiServerIp = document.getElementById("ip-input").value;
+    guiServerPort = document.getElementById("port-input").value;
+    debugOutput = document.getElementById("debug-output").value;
+}
 
 function sendMessage(serviceName, value)
 {
-    var msg = {
-        "type" : "movement",
-        "name" : String(robotSelect.options[robotSelect.selectedIndex].value),
-        "service" : serviceName,
-        "value" : String(value),
+    if (serviceName && value)
+    {
+        var msg = {
+            "type" : "movement",
+            "name" : String(robotSelect.options[robotSelect.selectedIndex].value),
+            "service" : serviceName,
+            "value" : String(value),
+        }
+        client.write(JSON.stringify(msg) + '\r\n');
+        log('Sent message: ' + JSON.stringify(msg));
     }
-    client.write(JSON.stringify(msg) + '\r\n');
-    log('Sent message: ' + JSON.stringify(msg));
+    else
+    {
+        log("Can not send empty message!");
+    }
 }
 
 function toggleGripStatus()
@@ -74,6 +89,7 @@ function getServices()
 
 function refreshGuiElements()
 {
+
     var currentRobot = String(robotSelect.options[robotSelect.selectedIndex].value);
     var servicesForCurrentRobot = robotRegistry[currentRobot];
 
@@ -164,7 +180,7 @@ function refreshGuiElements()
             htmlContent = `
                 <div class="Grid-cell">
                     <div class="button-wrapper">
-                        <a nohref class="border-box button full-width" id="grip-button">${serviceObject.description}</a>
+                        <a nohref class="border-box button full-width" id="${serviceName}-button">${serviceObject.description}</a>
                     </div>
                 </div>
             `;
@@ -175,6 +191,27 @@ function refreshGuiElements()
         guiButton.id = serviceName + "-wrapper";
         guiButton.innerHTML = htmlContent;
         parentElement.appendChild(guiButton);
+
+        // Add event listener to new element
+        var newElement = document.getElementById(serviceName + "-wrapper");
+
+        if (serviceObject.parameter == 'range')
+        {
+            var newSlider = document.getElementById(serviceName + "-slider");
+            newSlider.addEventListener("change", function() {
+                log("Custom service " + serviceName + " triggered!");
+                sendMessage(serviceName, newSlider.value);
+            }, false);
+        }
+        else
+        {
+            var newButton = document.getElementById(serviceName + "-button");
+            newButton.addEventListener("click", function() {
+                log("Custom service " + serviceName + " triggered!");
+                sendMessage(serviceName, "1");
+            }, false);
+        }
+
     }
     
 }
@@ -221,12 +258,17 @@ function sleep (time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
+// Set initial value displays
+horizontalValue.innerHTML = horizontalSlider.value;
+verticalValue.innerHTML = verticalSlider.value;
+
 // Delay start of program to see if alle elements are correctly hidden
 sleep(2000).then(() => {
     getServices();
 })
 
 
+// Event listeners
 horizontalSlider.addEventListener("change", function() {
     horizontalValue.innerHTML = horizontalSlider.value;
     sendMessage("moveHorizontal", horizontalSlider.value);
@@ -244,7 +286,17 @@ robotSelect.addEventListener("change", function() {
 
 gripButton.addEventListener("click", toggleGripStatus);
 
+emergencyButton.addEventListener("click", function() {
+    log("Emergency stop triggered!");
+    sendMessage("emergencyStop", "1");
+}, false);
+
 refreshButton.addEventListener("click", function() {
     log("Refresh triggered!");
     getServices();
+}, false);
+
+saveSettingsButton.addEventListener("click", function() {
+    log("Settings were saved!");
+    saveSettings();
 }, false);
