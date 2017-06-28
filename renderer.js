@@ -3,7 +3,7 @@
 // All of the Node.js APIs are available in this process.
 const net = require('net');
 const guiServerIp = "127.0.0.1";
-const guiServerPort = "8000";
+const guiServerPort = "8887";
 const debugOutput = true;
 
 var horizontalSlider = document.getElementById("horizontal-slider");
@@ -68,29 +68,7 @@ function getServices()
     log("Sent message " + getServicesMsg.type + " to Server " + guiServerIp + ":" + guiServerPort);
 
     // Set callback for response
-    client.on('data', (data) => {
-        if (JSON.stringify(robotRegistry) === data.toString())
-        {
-            log("Received same RobotRegistry!");
-            return;
-        }
-        // Save response array of robot names
-        robotRegistry = JSON.parse(data.toString());
-
-        log("Received answer: " + JSON.stringify(robotRegistry));
-
-        // Delete list in frontend and populate again
-        robotSelect.innerHTML = "";
-
-        for (var robotName in robotRegistry)
-        {
-            var newOption = document.createElement("option");
-            newOption.text = robotName;
-            newOption.value = robotName;
-            robotSelect.add(newOption);
-        }
-        refreshGuiElements();
-    });
+    client.on('data', parseRobotRegistryAnswer);
 
 }
 
@@ -99,21 +77,125 @@ function refreshGuiElements()
     var currentRobot = String(robotSelect.options[robotSelect.selectedIndex].value);
     var servicesForCurrentRobot = robotRegistry[currentRobot];
 
+    // Create deep copy of object, so we can edit it
+    servicesForCurrentRobot = JSON.parse(JSON.stringify(servicesForCurrentRobot));
+
+    // Parse static services with custom design
     if ('moveVertical' in servicesForCurrentRobot)
     {
-        document.getElementById('vertical-wrapper').classList.remove('hidden-wrapper');
+        delete servicesForCurrentRobot.moveVertical;
+        document.getElementById('vertical-wrapper').classList.remove('hidden');
+    }
+    else
+    {
+        document.getElementById('vertical-wrapper').classList.add('hidden');
+    }
+
+    if ('moveHorizontal' in servicesForCurrentRobot)
+    {
+        delete servicesForCurrentRobot.moveHorizontal;
+        document.getElementById('horizontal-wrapper').classList.remove('hidden');
+    }
+    else
+    {
+        document.getElementById('horizontal-wrapper').classList.add('hidden');
+    }
+
+    if ('grab' in servicesForCurrentRobot)
+    {
+        delete servicesForCurrentRobot.grab;
+        document.getElementById('grab-wrapper').classList.remove('hidden');
+    }
+    else
+    {
+        document.getElementById('grab-wrapper').classList.add('hidden');
     }
 
     if ('emergencyStop' in servicesForCurrentRobot)
     {
-        document.getElementById('emergency-wrapper').classList.remove('hidden-wrapper');
+        delete servicesForCurrentRobot.emergencyStop;
+        document.getElementById('emergency-wrapper').classList.remove('hidden');
+    }
+    else
+    {
+        document.getElementById('emergency-wrapper').classList.add('hidden');
+    }
+
+    // Now parse all dynamic, custom services
+
+    // Get parent element and clear all entries
+    var parentElement = document.getElementById('customservices-wrapper');
+    parentElement.innerHTML = "";
+
+    // Populate parent element
+    for (var serviceName in servicesForCurrentRobot)
+    {
+        var serviceObject = servicesForCurrentRobot[serviceName];
+        
+        var htmlContent = "";
+        // Service has a range parameter (slider)
+        if (serviceObject.parameter == 'range')
+        {
+            htmlContent = `
+                <div class="Grid-cell">
+                    <div class="slider horizontal border-box full-width">
+                        <label for="${serviceName}-slider" class="text-label">${serviceObject.description}</label><br />
+                        <label for="${serviceName}-slider">
+                            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+                        </label>
+                            <input type="range" id="${serviceName}-slider" min="0" max="100" value="50"/>
+                        <label for="${serviceName}-slider">
+                            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                        </label>
+                    </div>
+                </div>
+            `;
+        }
+        // Service has a binary parameter (button)
+        else if (serviceObject.parameter == 'binary')
+        {
+            htmlContent = `
+                <div class="Grid-cell">
+                    <div class="button-wrapper">
+                        <a nohref class="border-box button full-width" id="grip-button">${serviceObject.description}</a>
+                    </div>
+                </div>
+            `;
+        }
+        
+        var guiButton = document.createElement("div");
+        guiButton.className = "Grid";
+        guiButton.id = serviceName + "-wrapper";
+        guiButton.innerHTML = htmlContent;
+        parentElement.appendChild(guiButton);
     }
     
 }
 
-function updateDisplayValuesNewRobot(newRobotId)
+function parseRobotRegistryAnswer(data)
 {
-    // Need response channel from robot to implement
+    if (JSON.stringify(robotRegistry) === data.toString())
+    {
+        log("Received same RobotRegistry!");
+        return;
+    }
+    
+    // Save response array of robot names
+    robotRegistry = JSON.parse(data.toString());
+
+    log("Received answer: " + JSON.stringify(robotRegistry));
+
+    // Delete list in frontend and populate again
+    robotSelect.innerHTML = "";
+
+    for (var robotName in robotRegistry)
+    {
+        var newOption = document.createElement("option");
+        newOption.text = robotName;
+        newOption.value = robotName;
+        robotSelect.add(newOption);
+    }
+    refreshGuiElements();
 }
 
 const client = net.connect({port: guiServerPort, host: guiServerIp}, function() {
@@ -132,16 +214,10 @@ function sleep (time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-// Usage!
+// Delay start of program to see if alle elements are correctly hidden
 sleep(2000).then(() => {
     getServices();
 })
-
-// Start of program
-
-
-
-
 
 
 horizontalSlider.addEventListener("input", function() {
@@ -152,6 +228,11 @@ horizontalSlider.addEventListener("input", function() {
 verticalSlider.addEventListener("input", function() {
     verticalValue.innerHTML = verticalSlider.value;
     sendMessage("moveVertical", verticalSlider.value);
+}, false);
+
+robotSelect.addEventListener("change", function() {
+    log("Changed active robot!");
+    refreshGuiElements();
 }, false);
 
 gripButton.addEventListener("click", toggleGripStatus);

@@ -32,8 +32,8 @@
         </div>
       </div>
 
-      <div class="Grid hidden-wrapper" id="vertical-wrapper">
-        <div class="Grid-cell u-1of4">
+      <div class="Grid hidden" id="vertical-wrapper">
+        <div class="Grid-cell u-1of4" style="margin-bottom: 15px;">
           <div class="slider vertical border-box">
             <label for="vertical-slider">
               <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
@@ -52,7 +52,7 @@
           </div>
         </div>
       </div>
-      <div class="Grid" id="horizontal-wrapper">
+      <div class="Grid hidden" id="horizontal-wrapper">
         <div class="Grid-cell">
           <div class="slider horizontal border-box full-width">
             <label for="horizontal-slider" class="text-label">Horizontal position:</label><br />
@@ -67,7 +67,7 @@
         </div>
       </div>
 
-      <div class="Grid" id="grip-wrapper">
+      <div class="Grid hidden" id="grab-wrapper">
         <div class="Grid-cell">
           <div class="button-wrapper">
             <a nohref class="border-box button full-width" id="grip-button"><i class="fa fa-hand-rock-o" aria-hidden="true"></i> Open Grabber</a>
@@ -75,9 +75,7 @@
         </div>
       </div>
 
-      <h3>Custom services:</h3>
-
-      <div class="Grid hidden-wrapper" id="emergency-wrapper">
+      <div class="Grid hidden" id="emergency-wrapper">
         <div class="Grid-cell">
           <div class="button-wrapper">
             <a nohref class="border-box button emergency-stop full-width" id="grip-button"><i class="fa fa-ban" aria-hidden="true"></i> Emergency Stop</a>
@@ -85,9 +83,11 @@
         </div>
       </div>
 
-      <div class="button-wrapper">
-        <a nohref class="border-box button full-width" id="grip-button">Custom Service 1</a>
+      <h3>Custom services:</h3>
+      <div id="customservices-wrapper">
+
       </div>
+
   </div>
 </body>
   <script>

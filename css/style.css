@@ -95,7 +95,6 @@ h3
 .horizontal
 {
   display:block;
-  margin-top: 20px;
   padding: 0 31px 10px 31px;
 }
 
@@ -138,7 +137,7 @@ h3
   text-align: center;
 }
 
-.hidden-wrapper{
+.hidden{
   display: none !important;
 }
 
