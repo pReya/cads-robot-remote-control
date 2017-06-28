@@ -77,25 +77,6 @@ function sendMessage(serviceName, value)
     }
 }
 
-function sendMessageUdp(serviceName, value)
-{
-    var msg = {
-            "type" : "movement",
-            "name" : String(robotSelect.options[robotSelect.selectedIndex].value),
-            "service" : serviceName,
-            "value" : String(value),
-        }
-
-    var message = new Buffer('1');
-
-    var client = dgram.createSocket('udp4');
-    client.send(message, 0, message.length, PORT, HOST, function(err, bytes) {
-        if (err) throw err;
-        console.log('UDP message sent to ' + HOST +':'+ PORT);
-        client.close();
-    });
-}
-
 function toggleGripStatus()
 {
     gripStatus = !gripStatus;
@@ -194,12 +175,12 @@ function refreshGuiElements()
             htmlContent = `
                 <div class="Grid-cell">
                     <div class="slider horizontal border-box full-width">
-                        <label for="${serviceName}-slider" class="text-label">${serviceObject.description}</label><br />
-                        <label for="${serviceName}-slider">
+                        <label for="${serviceName}-${currentRobot.substring(0,7)}-slider" class="text-label">${serviceObject.description}</label><br />
+                        <label for="${serviceName}-${currentRobot.substring(0,7)}-slider">
                             <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
                         </label>
-                            <input type="range" id="${serviceName}-slider" name="${serviceName}" min="0" max="100" value="50"/>
-                        <label for="${serviceName}-slider">
+                            <input type="range" id="${serviceName}-${currentRobot.substring(0,7)}-slider" name="${serviceName}" min="0" max="100" value="50"/>
+                        <label for="${serviceName}-${currentRobot.substring(0,7)}-slider">
                             <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
                         </label>
                     </div>
@@ -212,7 +193,7 @@ function refreshGuiElements()
             htmlContent = `
                 <div class="Grid-cell">
                     <div class="button-wrapper">
-                        <a nohref class="border-box button full-width" id="${serviceName}-button" name="${serviceName}">${serviceObject.description}</a>
+                        <a nohref class="border-box button full-width" id="${serviceName}-${currentRobot.substring(0,7)}-button" name="${serviceName}">${serviceObject.description}</a>
                     </div>
                 </div>
             `;
@@ -225,21 +206,21 @@ function refreshGuiElements()
         parentElement.appendChild(guiButton);
 
         // Add event listener to new element
-        var newElement = document.getElementById(serviceName + "-wrapper");
+    
 
         if (serviceObject.parameter == 'range')
         {
-            var newSlider = document.getElementById(serviceName + "-slider");
+            var newSlider = document.getElementById(serviceName + "-" + currentRobot.substring(0,7) + "-slider");
             newSlider.addEventListener("change", function() {
-                log("Custom service " + serviceName + " triggered!");
+                log("Custom service " + this.name + " triggered!");
                 sendMessage(this.name, this.value);
             }, false);
         }
         else
         {
-            var newButton = document.getElementById(serviceName + "-button");
+            var newButton = document.getElementById(serviceName + "-" + currentRobot.substring(0,7) + "-button");
             newButton.addEventListener("click", function() {
-                log("Custom service " + serviceName + " triggered!");
+                log("Custom service " + this.name + " triggered!");
                 sendMessage(this.name, "1");
             }, false);
         }
