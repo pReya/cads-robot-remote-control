@@ -80,6 +80,8 @@ function refreshGuiElements()
     // Create deep copy of object, so we can edit it
     servicesForCurrentRobot = JSON.parse(JSON.stringify(servicesForCurrentRobot));
 
+    document.getElementById('spinner-wrapper').classList.add('hidden');
+
     // Parse static services with custom design
     if ('moveVertical' in servicesForCurrentRobot)
     {
@@ -126,6 +128,11 @@ function refreshGuiElements()
     // Get parent element and clear all entries
     var parentElement = document.getElementById('customservices-wrapper');
     parentElement.innerHTML = "";
+
+    if (Object.keys(servicesForCurrentRobot).length > 0)
+    {
+        document.getElementById('custom-headline').classList.remove('hidden');
+    }
 
     // Populate parent element
     for (var serviceName in servicesForCurrentRobot)
@@ -220,12 +227,12 @@ sleep(2000).then(() => {
 })
 
 
-horizontalSlider.addEventListener("input", function() {
+horizontalSlider.addEventListener("change", function() {
     horizontalValue.innerHTML = horizontalSlider.value;
     sendMessage("moveHorizontal", horizontalSlider.value);
 }, false); 
 
-verticalSlider.addEventListener("input", function() {
+verticalSlider.addEventListener("change", function() {
     verticalValue.innerHTML = verticalSlider.value;
     sendMessage("moveVertical", verticalSlider.value);
 }, false);
