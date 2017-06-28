@@ -19,6 +19,7 @@ function createWindow () {
     height: 860,
     icon: path.join(__dirname, 'icons/png/64x64.png'
   )})
+  mainWindow.setMenu(null)
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({

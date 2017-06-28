@@ -236,11 +236,26 @@ input
 /* Modal Content/Box */
 .modal-content {
     color: #000000;
+    font-size: 12px;
+    line-height: 22px;
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.modal-content button
+{
+  margin-top: 10px;
+  height:30px;
+  width:60px;
+}
+
+.modal-content label
+{
+  width:110px;
+  display:inline-block
 }
 
 /* The Close Button */

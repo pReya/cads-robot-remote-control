@@ -3,7 +3,7 @@
 // All of the Node.js APIs are available in this process.
 const net = require('net');
 var guiServerIp = "127.0.0.1";
-var guiServerPort = "8000";
+var guiServerPort = "8887";
 var debugOutput = true;
 
 var horizontalSlider = document.getElementById("horizontal-slider");
@@ -14,12 +14,12 @@ var gripButton = document.getElementById("grip-button");
 var refreshButton = document.getElementById("refresh-button");
 var emergencyButton = document.getElementById("emergency-button");
 var robotSelect = document.getElementById("robot-selector");
-var saveSettingsButton = document.getElementById("save-settings");
 
 // Modal
 var modal = document.getElementById('settings-modal');
 var btn = document.getElementById("settings-button");
 var span = document.getElementsByClassName("close")[0];
+var saveSettingsButton = document.getElementById("save-settings");
  
 btn.onclick = function() {
     modal.style.display = "block";
@@ -35,6 +35,13 @@ window.onclick = function(event) {
     }
 }
 
+saveSettingsButton.addEventListener("click", function() {
+    log("Settings were saved!");
+    modal.style.display = "none";
+    saveSettings();
+    refreshGuiElements();
+}, false);
+
 var gripStatus = false;
 var robotRegistry;
 
@@ -42,7 +49,11 @@ function saveSettings()
 {
     guiServerIp = document.getElementById("ip-input").value;
     guiServerPort = document.getElementById("port-input").value;
-    debugOutput = document.getElementById("debug-output").value;
+    debugOutput = document.getElementById("debug-output").checked;
+    client = net.connect({port: guiServerPort, host: guiServerIp}, function() {
+        log('Connected to server ' + guiServerIp + ':' + guiServerPort);
+        getServices();
+    });
 }
 
 function sendMessage(serviceName, value)
@@ -242,10 +253,6 @@ function parseRobotRegistryAnswer(data)
     refreshGuiElements();
 }
 
-const client = net.connect({port: guiServerPort, host: guiServerIp}, function() {
-    log('Connected to server ' + guiServerIp + ':' + guiServerPort);
-});
-
 function log(message)
 {
     if (debugOutput)
@@ -258,9 +265,16 @@ function sleep (time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
+var client = net.connect({port: guiServerPort, host: guiServerIp}, function() {
+    log('Connected to server ' + guiServerIp + ':' + guiServerPort);
+});
+
 // Set initial value displays
 horizontalValue.innerHTML = horizontalSlider.value;
 verticalValue.innerHTML = verticalSlider.value;
+document.getElementById("ip-input").value = guiServerIp;
+document.getElementById("port-input").value = guiServerPort;
+document.getElementById("debug-output").checked = debugOutput;
 
 // Delay start of program to see if alle elements are correctly hidden
 sleep(2000).then(() => {
@@ -294,9 +308,4 @@ emergencyButton.addEventListener("click", function() {
 refreshButton.addEventListener("click", function() {
     log("Refresh triggered!");
     getServices();
-}, false);
-
-saveSettingsButton.addEventListener("click", function() {
-    log("Settings were saved!");
-    saveSettings();
 }, false);
